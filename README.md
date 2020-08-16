@@ -1,2 +1,2 @@
 # react-native-app
-React Native App
+React Native App using EXPO
