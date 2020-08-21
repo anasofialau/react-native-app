@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, View, FlatList } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
-import { LEADERS } from '../shared/leaders';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+  return {
+    leaders: state.leaders
+  }
+}
 
 function History() {
   return (
@@ -17,52 +24,37 @@ function History() {
   );
 }
 
-function LeadersList(props) {
-  const leaders = props.leaders
-
-  const renderItem = ({item, index}) => {
-      return (
-        <ListItem
-            key={index}
-            title={item.name}
-            titleStyle={{ color: 'black', fontWeight: 'bold' }}
-            subtitle={item.description}
-            leftAvatar={{ source: require('./images/uthappizza.png')}}
-          />
-      );
-  };
-
-  return (
-    <Card
-      title={'Corporate Leadership'}>
-
-      <FlatList
-          data={leaders}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-      />
-    </Card>
-  );
-}
-
 class About extends Component {
-
-  constructor(props) {
-        super(props);
-        this.state = {
-          leaders: LEADERS
-        };
-    }
 
     static navigationOptions = {
         title: 'About Us'
     };
 
     render() {
+      const renderItem = ({item, index}) => {
+          return (
+            <ListItem
+                key={index}
+                title={item.name}
+                titleStyle={{ color: 'black', fontWeight: 'bold' }}
+                subtitle={item.description}
+                leftAvatar={{ source: {uri: baseUrl + item.image}}}
+              />
+          );
+      };
+
       return (
         <ScrollView>
           <History />
-          <LeadersList leaders={this.state.leaders}/>
+          <Card
+            title={'Corporate Leadership'}>
+
+            <FlatList
+                data={this.props.leaders.leaders}
+                renderItem={renderItem}
+                keyExtractor={item => item.id.toString()}
+            />
+          </Card>
         </ScrollView>
 
       );
@@ -70,4 +62,4 @@ class About extends Component {
 }
 
 
-export default About;
+export default connect(mapStateToProps)(About);
