@@ -41,11 +41,11 @@ class Menu extends Component {
     else if (this.props.dishes.errMess) {
         return(
             <View>
-                <Text>{props.dishes.errMess}</Text>
+                <Text>{this.props.dishes.errMess}</Text>
             </View>
         );
     }
-    else  {
+    else {
         return (
             <FlatList
                 data={this.props.dishes.dishes}
@@ -54,6 +54,13 @@ class Menu extends Component {
                 />
         );
     }
+    return (
+            <FlatList
+                data={this.props.dishes.dishes}
+                renderItem={renderMenuItem}
+                keyExtractor={item => item.id.toString()}
+                />
+    );
   }
 }
 

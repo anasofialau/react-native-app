@@ -31,7 +31,7 @@ const mapDispatchToProps = dispatch => ({
 const MenuNavigator = createStackNavigator({
         Menu: { screen: Menu,
                 navigationOptions: ({ navigation}) => ({
-                    headerLeft: <Icon name="menu" size={24} color="white" onPress={() => navigation.toggleDrawer()} />
+                    headerLeft: () => <Icon name="menu" size={24} color="white" onPress={() => navigation.toggleDrawer()} />
                 })
               },
         Dishdetail: { screen: Dishdetail }
@@ -58,7 +58,7 @@ const HomeNavigator = createStackNavigator({
             headerStyle: {
                 backgroundColor: "#512DA8"
             },
-            headerLeft: <Icon name="menu" size={24} color="white" onPress={() => navigation.toggleDrawer()} />,
+            headerLeft: () => <Icon name="menu" size={24} color="white" onPress={() => navigation.toggleDrawer()} />,
             headerTintColor: '#fff',
             headerTitleStyle: {
                 color: "#fff"
@@ -75,7 +75,7 @@ const ContactNavigator = createStackNavigator({
             headerStyle: {
                 backgroundColor: "#512DA8"
             },
-            headerLeft: <Icon name="menu" size={24} color="white" onPress={() => navigation.toggleDrawer()} />,
+            headerLeft: () => <Icon name="menu" size={24} color="white" onPress={() => navigation.toggleDrawer()} />,
             headerTintColor: '#fff',
             headerTitleStyle: {
                 color: "#fff"
@@ -92,7 +92,7 @@ const AboutUsNavigator = createStackNavigator({
             headerStyle: {
                 backgroundColor: "#512DA8"
             },
-            headerLeft: <Icon name="menu" size={24} color="white" onPress={() => navigation.toggleDrawer()} />,
+            headerLeft: () => <Icon name="menu" size={24} color="white" onPress={() => navigation.toggleDrawer()} />,
             headerTintColor: '#fff',
             headerTitleStyle: {
                 color: "#fff"
@@ -220,7 +220,8 @@ class Main extends Component {
 
   render() {
     return (
-      <View>
+      <View
+        style={{flex: 1,paddingTop: Platform.OS === 'ios' ? 0 : 0,}}>
         <AppContainer />
       </View>
     );
