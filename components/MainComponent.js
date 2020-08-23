@@ -207,12 +207,24 @@ const styles = StyleSheet.create({
   }
 });
 
-const Main = createAppContainer(MainNavigator)
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+const AppContainer = createAppContainer(MainNavigator);
 
-// componentDidMount() {
-//   this.props.fetchDishes();
-//   this.props.fetchComments();
-//   this.props.fetchPromos();
-//   this.props.fetchLeaders();
-// }
+class Main extends Component {
+
+  componentDidMount() {
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
+  }
+
+  render() {
+    return (
+      <View>
+        <AppContainer />
+      </View>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
