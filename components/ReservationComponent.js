@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Alert } from 'react-native';
 import { Card } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker'
-import { Permissions, Notifications } from 'expo';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 class Reservation extends Component {
 
@@ -24,7 +25,7 @@ class Reservation extends Component {
         console.log(JSON.stringify(this.state));
         let message = 'Number of Guests: ' + this.state.guests +
                       '\nSmoking? ' + this.state.smoking +
-                      '\nDate and Time: ' + this.state.date
+                      '\nDate and Time: ' + '\n' + this.state.date
         Alert.alert(
             'Your Reservation OK?',
             message,
