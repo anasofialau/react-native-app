@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Alert } from 'react-native';
 import { Card } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker'
-import { Notifications, Calendar } from 'expo';
+import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import * as Animatable from 'react-native-animatable';
+import * as Calendar from 'expo-calendar';
 
 class Reservation extends Component {
 
@@ -94,21 +95,18 @@ class Reservation extends Component {
     }
 
     async addReservationToCalendar(date) {
-        let permission = await this.obtainCalendarPermission();
-        if (permission == 'granted') {
+        await this.obtainCalendarPermission();
+        let dateMs = Date.parse(date);
+        let startDate = new Date(dateMs);
+        let endDate = new Date(dateMs + 2 * 60 * 60 * 1000);
 
-          let dateMs = Date.parse(date);
-          let startDate = new Date(dateMs);
-          let endDate = new Date(dateMs + 2 * 60 * 60 * 1000);
-
-          await Calendar.createEventAsync(Calendar.DEFAULT, {
-              title: 'Con Fusion Table Reservation',
-              startDate: startDate,
-              endDate: endDate,
-              timeZone: 'Asia/Hong_Kong',
-              location: '121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong'
-          });
-        }
+        await Calendar.createEventAsync(Calendar.DEFAULT, {
+            title: 'Con Fusion Table Reservation',
+            startDate: startDate,
+            endDate: endDate,
+            timeZone: 'Asia/Hong_Kong',
+            location: '121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong'
+        });
     }
 
     render() {
