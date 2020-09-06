@@ -27,7 +27,9 @@ function RenderDish(props) {
 
     const recognizeDrag = ({ moveX, moveY, dx, dy }) => {
         if ( dx < -200 )
-            return true;
+            return 'rtl';
+        else if (dx > 200)
+            return 'ltr';
         else
             return false;
     }
@@ -42,7 +44,8 @@ function RenderDish(props) {
         },
         onPanResponderEnd: (e, gestureState) => {
             console.log("pan responder end", gestureState);
-            if (recognizeDrag(gestureState))
+            const gesture = recognizeDrag(gestureState)
+            if (gesture == 'rtl')
                 Alert.alert(
                     'Add Favorite',
                     'Are you sure you wish to add ' + dish.name + ' to favorite?',
@@ -52,7 +55,8 @@ function RenderDish(props) {
                     ],
                     { cancelable: false }
                 );
-
+            else if(gesture == 'ltr')
+              props.showCommentFormModal();
             return true;
         }
     })
@@ -72,9 +76,9 @@ function RenderDish(props) {
           <Animatable.View animation="fadeInDown" duration={2000} delay={1000}
             ref={this.handleViewRef}
             {...panResponder.panHandlers}>
-            <Card
-              featuredTitle={dish.name}
-              image={{uri: baseUrl + dish.image}}>
+            <Card>
+              <Card.FeaturedTitle>{dish.name}</Card.FeaturedTitle>
+              <Card.Image source={{uri: baseUrl + dish.image}}></Card.Image>
                   <Text style={{margin: 10}}>
                       {dish.description}
                   </Text>
@@ -133,12 +137,13 @@ function RenderComments(props) {
 
     return (
         <Animatable.View animation="fadeInUp" duration={2000} delay={1000}>
-          <Card title='Comments' >
-          <FlatList
-              data={comments}
-              renderItem={renderCommentItem}
-              keyExtractor={item => item.id.toString()}
-              />
+          <Card>
+            <Card.Title>Comments</Card.Title>
+            <FlatList
+                data={comments}
+                renderItem={renderCommentItem}
+                keyExtractor={item => item.id.toString()}
+                />
           </Card>
         </Animatable.View>
     );

@@ -4,6 +4,7 @@ import { Card } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker'
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
+import * as Animatable from 'react-native-animatable';
 
 class Reservation extends Component {
 
@@ -82,6 +83,7 @@ class Reservation extends Component {
 
     render() {
         return(
+          <Animatable.View animation="zoomIn" duration={2000}>
             <ScrollView>
                 <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Number of Guests</Text>
@@ -141,6 +143,7 @@ class Reservation extends Component {
                     />
                 </View>
             </ScrollView>
+          </Animatable.View>
         );
     }
 
