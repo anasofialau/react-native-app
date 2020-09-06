@@ -27,9 +27,14 @@ function RenderDish(props) {
 
     const recognizeDrag = ({ moveX, moveY, dx, dy }) => {
         if ( dx < -200 )
-            return 'rtl';
-        else if (dx > 200)
-            return 'ltr';
+            return true;
+        else
+            return false;
+    }
+
+    const recognizeComment = ({ moveX, moveY, dx, dy }) => {
+        if ( dx > 200 )
+            return true;
         else
             return false;
     }
@@ -44,8 +49,7 @@ function RenderDish(props) {
         },
         onPanResponderEnd: (e, gestureState) => {
             console.log("pan responder end", gestureState);
-            const gesture = recognizeDrag(gestureState)
-            if (gesture == 'rtl')
+            if (recognizeDrag(gestureState))
                 Alert.alert(
                     'Add Favorite',
                     'Are you sure you wish to add ' + dish.name + ' to favorite?',
@@ -55,7 +59,7 @@ function RenderDish(props) {
                     ],
                     { cancelable: false }
                 );
-            else if(gesture == 'ltr')
+            else if(recognizeComment(gestureState))
               props.showCommentFormModal();
             return true;
         }
